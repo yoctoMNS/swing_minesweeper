@@ -9,6 +9,9 @@ import javax.swing.JFrame;
 import org.entity.Cursor;
 import org.display.Display;
 import org.stage.Stage;
+import org.states.State;
+import org.states.GameOverState;
+import org.states.GameState;
 
 public class GameManager implements Runnable {
     private boolean running;
@@ -19,11 +22,17 @@ public class GameManager implements Runnable {
     private Cursor cursor;
     private BufferStrategy bs;
     private Graphics g;
+    private State state;
+    private GameState gameState;
+    private GameOverState gameOverState;
 
     private void init() {
         org.graphics.Assets.init();
         cursor = new Cursor( this, 0, 0, Display.DRAW_TEXTURE_WIDTH, Display.DRAW_TEXTURE_HEIGHT );
         stage = new Stage( this );
+        gameState = new GameState( this );
+        gameOverState = new GameOverState( this );
+        state = gameState;
         display = new Display( this, "マインスイーパ", 300, 300 );
     }
 
@@ -60,8 +69,7 @@ public class GameManager implements Runnable {
 
         g = bs.getDrawGraphics();
 
-        stage.render( g );
-        cursor.render( g );
+        state.render( g );
 
         bs.show();
         g.dispose();
@@ -79,7 +87,7 @@ public class GameManager implements Runnable {
     }
 
     public void end() {
-        display.getFrame().dispatchEvent( new WindowEvent( display.getFrame(), WindowEvent.WINDOW_CLOSING ) );
+        // display.getFrame().dispatchEvent( new WindowEvent( display.getFrame(), WindowEvent.WINDOW_CLOSING ) );
         stop();
     }
 
@@ -101,5 +109,9 @@ public class GameManager implements Runnable {
 
     public Stage getStage() {
         return stage;
+    }
+
+    public State getState() {
+        return state;
     }
 }

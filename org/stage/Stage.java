@@ -46,7 +46,6 @@ public class Stage {
         if ( canOpenCell( x, y ) ) {
             if ( isBombCell( x, y ) ) {
                 game.setGameOver( true );
-                game.stop();
             } else {
                 setStageCell( x, y, OPEN );
             }
@@ -100,7 +99,7 @@ public class Stage {
                     break;
 
                 case BOMB:
-                    g.drawImage( Assets.bombCell,
+                    g.drawImage( game.isGameOver() ? Assets.bombCell : Assets.noneCell,
                                  Display.DRAW_TEXTURE_WIDTH * j, Display.DRAW_TEXTURE_HEIGHT * i,
                                  Display.DRAW_TEXTURE_WIDTH, Display.DRAW_TEXTURE_HEIGHT,
                                  null );
