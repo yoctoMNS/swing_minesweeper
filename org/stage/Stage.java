@@ -43,11 +43,13 @@ public class Stage {
     }
 
     public void open( int x, int y ) {
-        if ( canOpenCell( x, y ) ) {
-            if ( isBombCell( x, y ) ) {
-                game.setGameOver( true );
-            } else {
-                setStageCell( x, y, OPEN );
+        if ( !game.isGameOver() ) {
+            if ( canOpenCell( x, y ) ) {
+                if ( isBombCell( x, y ) ) {
+                    game.setGameOver( true );
+                } else {
+                    setStageCell( x, y, OPEN );
+                }
             }
         }
     }

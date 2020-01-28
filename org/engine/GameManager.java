@@ -33,7 +33,7 @@ public class GameManager implements Runnable {
         gameState = new GameState( this );
         gameOverState = new GameOverState( this );
         state = gameState;
-        display = new Display( this, "マインスイーパ", 300, 300 );
+        display = new Display( this, "マインスイーパ", Display.DRAW_TEXTURE_WIDTH * 10, Display.DRAW_TEXTURE_HEIGHT * 10 );
     }
 
     public synchronized void start() {
@@ -83,11 +83,6 @@ public class GameManager implements Runnable {
             render();
         }
 
-        end();
-    }
-
-    public void end() {
-        // display.getFrame().dispatchEvent( new WindowEvent( display.getFrame(), WindowEvent.WINDOW_CLOSING ) );
         stop();
     }
 
@@ -97,6 +92,9 @@ public class GameManager implements Runnable {
 
     public void setGameOver( boolean b ) {
         gameOver = b;
+        if ( b ) {
+            state = gameOverState;
+        }
     }
  
     public boolean isGameOver() {
@@ -113,5 +111,9 @@ public class GameManager implements Runnable {
 
     public State getState() {
         return state;
+    }
+
+    public Display getDisplay() {
+        return display;
     }
 }
