@@ -19,7 +19,7 @@ public class GameOverState extends State {
         int screenHeight = game.getDisplay().getCanvas().getHeight();
 
         game.getStage().render( g );
-        g.setColor( new Color( 1.0f, 1.0f, 1.0f, 0.8f ) );
+        g.setColor( new Color( 1.0f, 1.0f, 1.0f, 0.5f ) );
         g.fillRect( 0, 0, screenWidth,  screenHeight);
         g.setColor( Color.black );
 
@@ -29,7 +29,6 @@ public class GameOverState extends State {
         g.drawString( str,
                       ( screenWidth / 2 ) - 20,
                       ( screenHeight / 2 ) - 10 );
-
     }
 
     @Override

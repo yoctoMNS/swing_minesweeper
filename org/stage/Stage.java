@@ -30,6 +30,16 @@ public class Stage {
         putBombs();
     }
 
+    public void reset() {
+        for ( int i = 0; i < WIDTH; ++i ) {
+            for ( int j = 0; j < HEIGHT; ++j ) {
+                data[ i ][ j ] = NONE;
+            }
+        }
+
+        putBombs();
+    }
+
     private void putBombs() {
         for ( int i = 0; i < HEIGHT; ++i ) {
             for ( int j = 0; j < WIDTH; ++j ) {
@@ -43,7 +53,7 @@ public class Stage {
     }
 
     public void open( int x, int y ) {
-        if ( !game.isGameOver() ) {
+        if ( game.getState().equals( game.getGameState() ) ) {
             if ( canOpenCell( x, y ) ) {
                 if ( isBombCell( x, y ) ) {
                     game.setGameOver( true );

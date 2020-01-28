@@ -12,6 +12,7 @@ import org.stage.Stage;
 import org.states.State;
 import org.states.GameOverState;
 import org.states.GameState;
+import org.states.MenuState;
 
 public class GameManager implements Runnable {
     private boolean running;
@@ -24,6 +25,7 @@ public class GameManager implements Runnable {
     private Graphics g;
     private State state;
     private GameState gameState;
+    private MenuState menuState;
     private GameOverState gameOverState;
 
     private void init() {
@@ -32,6 +34,7 @@ public class GameManager implements Runnable {
         stage = new Stage( this );
         gameState = new GameState( this );
         gameOverState = new GameOverState( this );
+        menuState = new MenuState( this );
         state = gameState;
         display = new Display( this, "マインスイーパ", Display.DRAW_TEXTURE_WIDTH * 10, Display.DRAW_TEXTURE_HEIGHT * 10 );
     }
@@ -96,6 +99,11 @@ public class GameManager implements Runnable {
             state = gameOverState;
         }
     }
+
+    public void reset() {
+        stage.reset();
+        state = gameState;
+    }
  
     public boolean isGameOver() {
         return gameOver;
@@ -111,6 +119,30 @@ public class GameManager implements Runnable {
 
     public State getState() {
         return state;
+    }
+
+    public GameState getGameState() {
+        return gameState;
+    }
+
+    public void setGameState() {
+        state = gameState;
+    }
+
+    public GameOverState getGameOverState() {
+        return gameOverState;
+    }
+
+    public void setGameOverState() {
+        state = gameOverState;
+    }
+
+    public MenuState getMenuState() {
+        return menuState;
+    }
+
+    public void setMenuState() {
+        state = menuState;
     }
 
     public Display getDisplay() {

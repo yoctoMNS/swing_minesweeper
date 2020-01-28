@@ -6,11 +6,12 @@ import java.awt.Dimension;
 import javax.swing.JFrame;
 
 import org.engine.GameManager;
+import org.event.KeyboardManager;
 import org.event.MouseManager;
 
 public class Display {
-    public static final int DRAW_TEXTURE_WIDTH = 30;
-    public static final int DRAW_TEXTURE_HEIGHT = 30;
+    public static final int DRAW_TEXTURE_WIDTH = 80;
+    public static final int DRAW_TEXTURE_HEIGHT = 80;
 
     private GameManager game;
     private JFrame frame;
@@ -35,6 +36,7 @@ public class Display {
         frame.setLocationRelativeTo( null );
         frame.setResizable( false );
         frame.setVisible( true );
+        frame.addKeyListener( new KeyboardManager( game ) );
 
         canvas = new Canvas();
         canvas.setPreferredSize( new Dimension( width, height ) );
