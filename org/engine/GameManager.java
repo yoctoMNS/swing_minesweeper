@@ -32,11 +32,11 @@ public class GameManager implements Runnable {
         org.graphics.Assets.init();
         cursor = new Cursor( this, 0, 0, Display.DRAW_TEXTURE_WIDTH, Display.DRAW_TEXTURE_HEIGHT );
         stage = new Stage( this );
+        display = new Display( this, "マインスイーパ", Display.DRAW_TEXTURE_WIDTH * 10, Display.DRAW_TEXTURE_HEIGHT * 10 );
         gameState = new GameState( this );
         gameOverState = new GameOverState( this );
         menuState = new MenuState( this );
         state = gameState;
-        display = new Display( this, "マインスイーパ", Display.DRAW_TEXTURE_WIDTH * 10, Display.DRAW_TEXTURE_HEIGHT * 10 );
     }
 
     public synchronized void start() {
@@ -93,6 +93,10 @@ public class GameManager implements Runnable {
         return running;
     }
 
+    public void exit() {
+        stop();
+    }
+
     public void setGameOver( boolean b ) {
         gameOver = b;
         if ( b ) {
@@ -107,6 +111,14 @@ public class GameManager implements Runnable {
  
     public boolean isGameOver() {
         return gameOver;
+    }
+
+    public int getWidth() {
+        return display.getCanvas().getWidth();
+    }
+
+    public int getHeight() {
+        return display.getCanvas().getHeight();
     }
 
     public Cursor getCursor() {

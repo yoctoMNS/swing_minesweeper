@@ -53,13 +53,11 @@ public class Stage {
     }
 
     public void open( int x, int y ) {
-        if ( game.getState().equals( game.getGameState() ) ) {
-            if ( canOpenCell( x, y ) ) {
-                if ( isBombCell( x, y ) ) {
-                    game.setGameOver( true );
-                } else {
-                    setStageCell( x, y, OPEN );
-                }
+        if ( canOpenCell( x, y ) ) {
+            if ( isBombCell( x, y ) ) {
+                game.setGameOver( true );
+            } else {
+                setStageCell( x, y, OPEN );
             }
         }
     }

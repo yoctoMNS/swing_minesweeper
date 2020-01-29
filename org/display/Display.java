@@ -37,11 +37,14 @@ public class Display {
         frame.setResizable( false );
         frame.setVisible( true );
         frame.addKeyListener( new KeyboardManager( game ) );
+        frame.addMouseMotionListener( new MouseManager( game ) );
+        frame.addMouseListener( new MouseManager( game ) );
 
         canvas = new Canvas();
         canvas.setPreferredSize( new Dimension( width, height ) );
         canvas.setMaximumSize( new Dimension( width, height ) );
         canvas.setMinimumSize( new Dimension( width, height ) );
+        canvas.addKeyListener( new KeyboardManager( game ) );
         canvas.addMouseMotionListener( new MouseManager( game ) );
         canvas.addMouseListener( new MouseManager( game ) );
 

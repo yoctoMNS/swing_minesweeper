@@ -7,3 +7,4 @@ org\graphics\*.java ^
 org\stage\*.java ^
 org\states\*.java ^
 org\ui\*.java ^
+org\ui\button\*.java ^
