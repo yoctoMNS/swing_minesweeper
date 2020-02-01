@@ -28,8 +28,8 @@ public class GameOverState extends State {
 
     @Override
     public void render( Graphics g ) {
-        int screenWidth = game.getDisplay().getCanvas().getWidth();
-        int screenHeight = game.getDisplay().getCanvas().getHeight();
+        int screenWidth = game.getWidth();
+        int screenHeight = game.getHeight();
 
         game.getStage().render( g );
         g.setColor( new Color( 1.0f, 1.0f, 1.0f, 0.5f ) );

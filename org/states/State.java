@@ -9,9 +9,8 @@ import org.engine.GameManager;
 import org.ui.button.Button;
 
 public abstract class State {
-    public static State currentState;
     protected GameManager game;
-    List< Button > buttons;
+    protected List< Button > buttons;
 
     public State( GameManager game ) {
         this.game = game;
@@ -21,14 +20,6 @@ public abstract class State {
     public abstract void render( Graphics g );
 
     public abstract void update( MouseEvent e );
-
-    public void setCurrentState( State state ) {
-        currentState = state;
-    }
-
-    public State getCurrentState() {
-        return currentState;
-    }
 
     public GameManager getGameManager() {
         return game;

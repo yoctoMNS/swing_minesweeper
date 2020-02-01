@@ -2,11 +2,14 @@ package org.engine;
 
 import java.awt.Graphics;
 import java.awt.event.WindowEvent;
+import java.awt.event.WindowAdapter;
 import java.awt.image.BufferStrategy;
 
 import javax.swing.JFrame;
 
 import org.entity.Cursor;
+import org.event.KeyboardManager;
+import org.event.MouseManager;
 import org.display.Display;
 import org.stage.Stage;
 import org.states.State;
@@ -15,6 +18,9 @@ import org.states.GameState;
 import org.states.MenuState;
 
 public class GameManager implements Runnable {
+    private String title;
+    private int width;
+    private int height;
     private boolean running;
     private boolean gameOver;
     private Thread gameThread;
@@ -27,16 +33,32 @@ public class GameManager implements Runnable {
     private GameState gameState;
     private MenuState menuState;
     private GameOverState gameOverState;
+    private KeyboardManager keyboardManager;
+    private MouseManager mouseManager;
+
+    public GameManager( String title, int width, int height ) {
+        this.title = title;
+        this.width = width;
+        this.height = height;
+    }
 
     private void init() {
         org.graphics.Assets.init();
-        cursor = new Cursor( this, 0, 0, Display.DRAW_TEXTURE_WIDTH, Display.DRAW_TEXTURE_HEIGHT );
-        stage = new Stage( this );
-        display = new Display( this, "マインスイーパ", Display.DRAW_TEXTURE_WIDTH * 10, Display.DRAW_TEXTURE_HEIGHT * 10 );
         gameState = new GameState( this );
         gameOverState = new GameOverState( this );
         menuState = new MenuState( this );
+        cursor = new Cursor( this, 0, 0, Display.DRAW_TEXTURE_WIDTH, Display.DRAW_TEXTURE_HEIGHT );
         state = gameState;
+        stage = new Stage( this );
+        keyboardManager = new KeyboardManager( this );
+        mouseManager = new MouseManager( this, cursor, stage );
+        display = new Display( this, title, width, height );
+        display.getFrame().addKeyListener( keyboardManager );
+        display.getFrame().addMouseMotionListener( mouseManager );
+        display.getFrame().addMouseListener( mouseManager );
+        display.getCanvas().addKeyListener( keyboardManager );
+        display.getCanvas().addMouseMotionListener( mouseManager );
+        display.getCanvas().addMouseListener( mouseManager );
     }
 
     public synchronized void start() {
@@ -56,11 +78,8 @@ public class GameManager implements Runnable {
         }
 
         running = false;
-        try {
-            gameThread.join();
-        } catch ( InterruptedException e ) {
-            e.printStackTrace();
-        }
+        display.getFrame().dispose();
+        System.exit( 0 );
     }
 
     public void render() {
@@ -106,6 +125,7 @@ public class GameManager implements Runnable {
 
     public void reset() {
         stage.reset();
+        setGameOver( false );
         state = gameState;
     }
  
@@ -114,11 +134,11 @@ public class GameManager implements Runnable {
     }
 
     public int getWidth() {
-        return display.getCanvas().getWidth();
+        return width;
     }
 
     public int getHeight() {
-        return display.getCanvas().getHeight();
+        return height;
     }
 
     public Cursor getCursor() {

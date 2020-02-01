@@ -7,20 +7,17 @@ import org.engine.GameManager;
 import org.entity.Cursor;
 import org.display.Display;
 import org.stage.Stage;
-import org.states.State;
 import org.ui.button.Button;
 
 public class MouseManager extends MouseAdapter {
     private GameManager game;
     private Cursor cursor;
     private Stage stage;
-    private State currentState;
 
-    public MouseManager( GameManager game ) {
+    public MouseManager( GameManager game, Cursor cursor, Stage stage ) {
         this.game = game;
-        cursor = game.getCursor();
-        stage = game.getStage();
-        currentState = game.getState();
+        this.cursor = cursor;
+        this.stage = stage;
     }
 
     @Override
@@ -31,13 +28,11 @@ public class MouseManager extends MouseAdapter {
             stage.open( x, y );
         }
 
-        // FIXME
-        System.out.println( currentState );
-        // for ( Button button : currentState.getButtons() ) {
-        //     if ( button.isFocus( x, y ) ) {
-        //         button.click();
-        //     }
-        // }
+        for ( Button button : game.getState().getButtons() ) {
+            if ( button.isFocus( e.getX(), e.getY() ) ) {
+                button.click();
+            }
+        }
     }
 
     @Override
