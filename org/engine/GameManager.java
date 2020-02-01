@@ -101,8 +101,31 @@ public class GameManager implements Runnable {
     public void run() {
         init();
 
+        int fps = 60;
+		double timePerTick = 1000000000 / fps;
+		double delta = 0;
+		long now;
+		long lastTime = System.nanoTime();
+		long timer = 0;
+		int ticks = 0;
+
         while ( running ) {
-            render();
+			now = System.nanoTime();
+			delta += (now - lastTime) / timePerTick;
+			timer += now - lastTime;
+			lastTime = now;
+ 
+            if ( delta >= 1 ) {
+                render();
+                ++ticks;
+                --delta;
+            }
+
+            if ( timer >= 1000000000 ) {
+                display.getFrame().setTitle( title + "  " + ticks + "FPS" );
+                ticks = 0;
+                timer = 0;
+            }
         }
 
         stop();
